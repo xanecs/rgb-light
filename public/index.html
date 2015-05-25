@@ -1,0 +1,133 @@
+<html>
+<head>
+  <title>RGB LED</title>
+  <link rel="stylesheet" href="http://bgrins.github.com/spectrum/spectrum.css">
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+      background: #222;
+    }
+    .switch {
+      width: 195px;
+    }
+
+    .switch button {
+      width: 50%;
+      margin: 0;
+      box-sizing: border-box;
+      border: none;
+      padding: 16px;
+      background: #222;
+      color: white;
+    }
+
+    .switch button:hover {
+      background: #444;
+    }
+
+    .switch button:active {
+      background: #333;
+    }
+
+    .on {
+      float: left;
+    }
+
+    .off {
+      float: right;
+    }
+
+    .control {
+      width: 195px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin-top: -120px;
+      margin-left: -112px;
+      background: #111;
+      border: 15px solid #111;
+    }
+  </style>
+</head>
+<body>
+  <div class="control">
+    <div>
+      <input type="text" name="color" value="" class="colorpicker">
+    </div>
+    <div class="switch">
+      <button class="on">ON</button>
+      <button class="off">OFF</button>
+    </div>
+  </div>
+  <script src="http://code.jquery.com/jquery-2.1.4.min.js" charset="utf-8"></script>
+  <script src="http://bgrins.github.com/spectrum/spectrum.js" charset="utf-8"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="text/javascript">
+    function componentToHex(c) {
+      var hex = c.toString(16);
+      return hex.length == 1 ? "0" + hex : hex;
+    }
+
+    function rgbToHex(r, g, b) {
+      return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+    }
+    var socket = io();
+
+    var colorhex = "#FFFFFF"
+
+    socket.on('status', function (data) {
+        colorhex = data.color;
+        console.log(data);
+        if (data.power) {
+          $('.control').css({
+            'box-shadow': '0 0 2px 5px ' + colorhex
+          });
+        }
+        else {
+          $('.control').css({
+            'box-shadow': 'none'
+          });
+        }
+    });
+
+    $(".colorpicker").spectrum({
+      color: colorhex,
+      flat: true,
+      showButtons: false,
+      move: function(color) {
+        colorhex = rgbToHex(Math.floor(color._r), Math.floor(color._g), Math.floor(color._b));
+        socket.emit('colorchange', colorhex);
+        $('.control').css({
+          'box-shadow': '0 0 2px 5px ' + colorhex
+        });
+      }
+    });
+    $('.on').click(function () {
+      socket.emit('on');
+      $('.control').css({
+        'box-shadow': '0 0 2px 5px ' + colorhex
+      });
+    });
+    $('.off').click(function () {
+      socket.emit('off');
+      $('.control').css({
+        'box-shadow': 'none'
+      });
+    });
+    $(window).keydown(function () {
+      socket.emit('on');
+      $('.control').css({
+        'box-shadow': '0 0 2px 5px ' + colorhex
+      });
+    });
+
+    $(window).keyup(function () {
+      socket.emit('off');
+      $('.control').css({
+        'box-shadow': 'none'
+      });
+    });
+  </script>
+</body>
+</html>
