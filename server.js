@@ -23,22 +23,34 @@ board.on('ready', function () {
   var power = false;
 
   io.on('connection', function (socket) {
-    socket.emit('status', {
-      color: color,
-      power: power
-    });
+    function sendStatus () {
+      socket.broadcast.emit('status', {
+        color: color,
+        power: power
+      });
+    }
+
     socket.on('on', function () {
       led.on();
       power = true;
+      sendStatus();
     });
     socket.on('off', function () {
       led.off();
       power = false;
+      sendStatus();
     });
     socket.on('colorchange', function (newcolor) {
       led.color(newcolor);
       color = newcolor;
+      sendStatus();
     });
+
+    socket.emit('status', {
+      color: color,
+      power: power
+    });
+
   });
   server.listen(2000);
 });
