@@ -2,6 +2,7 @@ var express = require('express');
 var socketio = require('socket.io');
 var five = require('johnny-five');
 var http = require('http');
+var config = require('./config.json')
 
 var board = new five.Board();
 

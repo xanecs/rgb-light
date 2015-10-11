@@ -1,0 +1,19 @@
+{
+  "server": {
+    "port": 2000,
+    "hostname": "0.0.0.0",
+    "components": {
+      "webapp": true,
+      "restapi": true,
+      "sockets": true
+    }
+  },
+  "hardware": {
+    "serial": "/dev/ttyU0",
+    "pins": {
+      "red": 10,
+      "green": 9,
+      "blue": 11
+    }
+  }
+}

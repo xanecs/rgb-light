@@ -1,6 +1,6 @@
 {
   "name": "rgb-light",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
@@ -9,8 +9,8 @@
   "author": "Leon Bentrup",
   "license": "BSD",
   "dependencies": {
-    "express": "^4.12.4",
-    "johnny-five": "^0.8.76",
-    "socket.io": "^1.3.5"
+    "express": "*",
+    "johnny-five": "*",
+    "socket.io": "*"
   }
 }
