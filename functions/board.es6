@@ -11,7 +11,7 @@ class Board {
       port: serial,
       repl: false
     });
-    this.board.on('connection', () => {
+    this.board.on('ready', () => {
       this.led = new five.Led.RGB({
         pins: pins
       });
@@ -62,4 +62,4 @@ class Board {
   }
 }
 
-module.exprots = Board;
+module.exports = Board;

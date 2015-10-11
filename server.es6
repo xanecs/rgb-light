@@ -1,21 +1,39 @@
-var express = require('express');
-var socketio = require('socket.io');
-var five = require('johnny-five');
-var http = require('http');
-var config = require('./config.json')
+'use strict';
 
-var board = new five.Board();
+let express = require('express');
+let http = require('http');
+let config = require('./config.json');
+let bodyParser = require('body-parser');
 
-board.on('ready', function () {
-  var led = new five.Led.RGB({
-    pins: {
-      red: 10,
-      green: 9,
-      blue: 11
-    }
+let Board = require('./functions/board.es6');
+
+let board = new Board(config.hardware.serial, config.hardware.pins);
+
+var app = express();
+
+app.use(bodyParser.json());
+
+app.get('/status', (req, res) => {
+  res.send({
+    color: board.color,
+    power: board.power
   });
+});
 
-  var app = express();
+app.post('/power', (req, res) => {
+  board.power = req.body.power;
+});
+
+app.post('/color', (req, res) => {
+  board.color = req.body.color;
+});
+
+app.listen(config.server.port, config.server.hostname, err => {
+  if (err) return console.log(err);
+  console.log('HTTP Server started');
+});
+
+/*
   var server = http.createServer(app);
 
   app.use(express.static(__dirname + '/public'));
@@ -55,3 +73,4 @@ board.on('ready', function () {
   });
   server.listen(2000);
 });
+*/
