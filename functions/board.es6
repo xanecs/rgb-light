@@ -39,10 +39,17 @@ class Board {
 
     let hexColor = "#";
     for (let sub of ['red', 'green', 'blue']) {
-      hexColor += color[sub].toString(16);
+      let str = color[sub].toString(16);
+      if (str.length === 1) {
+        str = "0" + str;
+      }
+      hexColor += str;
     }
 
     this.led.color(hexColor);
+    if (color.red + color.green + color.blue !== 0) {
+      this.power = true;
+    }
   }
 
   get color() {
@@ -50,7 +57,7 @@ class Board {
   }
 
   checkColor(color) {
-    if (!(color.red && color.green && color.blue)) {
+    if (!(color.red !== undefined && color.green !== undefined && color.blue !== undefined)) {
       throw 'Invalid color object';
     }
 

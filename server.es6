@@ -22,10 +22,18 @@ app.get('/status', (req, res) => {
 
 app.post('/power', (req, res) => {
   board.power = req.body.power;
+  res.send({
+    color: board.color,
+    power: board.power
+  });
 });
 
 app.post('/color', (req, res) => {
-  board.color = req.body.color;
+  board.color = req.body;
+  res.send({
+    color: board.color,
+    power: board.power
+  });
 });
 
 app.listen(config.server.port, config.server.hostname, err => {

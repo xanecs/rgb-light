@@ -9,7 +9,7 @@
     }
   },
   "hardware": {
-    "serial": "/dev/ttyU0",
+    "serial": "/dev/ttyACM0",
     "pins": {
       "red": 10,
       "green": 9,
