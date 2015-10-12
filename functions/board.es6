@@ -1,9 +1,11 @@
 'use strict';
 
 let five = require('johnny-five');
+let EventEmitter = require('events');
 
-class Board {
-  constructor(serial, pins, connectCallback) {
+class Board extends EventEmitter {
+  constructor(serial, pins) {
+    super();
     this.ledpower = false;
     this.ledcolor = {red: 0, green: 0, blue: 0};
 
@@ -15,17 +17,23 @@ class Board {
       this.led = new five.Led.RGB({
         pins: pins
       });
-      if (connectCallback) connectCallback();
+      this.emit('ready');
     });
   }
 
   set power(power) {
-    this.ledpower = power;
     if (power) {
       this.led.on();
     }
     else {
       this.led.off();
+    }
+    if (this.ledpower !== power) {
+      this.ledpower = power;
+      this.emit('change', {
+        power: power,
+        color: this.ledcolor
+      });
     }
   }
 
@@ -35,7 +43,6 @@ class Board {
 
   set color(color) {
     this.checkColor(color);
-    this.ledcolor = color;
 
     let hexColor = "#";
     for (let sub of ['red', 'green', 'blue']) {
@@ -48,7 +55,14 @@ class Board {
 
     this.led.color(hexColor);
     if (color.red + color.green + color.blue !== 0) {
-      this.power = true;
+      this.ledpower = true;
+    }
+    if (this.ledcolor !== color) {
+      this.ledcolor = color;
+      this.emit('change', {
+        power: this.ledpower,
+        color: color
+      });
     }
   }
 
@@ -57,7 +71,7 @@ class Board {
   }
 
   checkColor(color) {
-    if (!(color.red !== undefined && color.green !== undefined && color.blue !== undefined)) {
+    if (color.red === undefined || color.green === undefined || color.blue === undefined) {
       throw 'Invalid color object';
     }
 

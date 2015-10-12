@@ -9,8 +9,12 @@
   "author": "Leon Bentrup",
   "license": "BSD-2-Clause",
   "dependencies": {
+    "body-parser": "*",
     "express": "*",
     "johnny-five": "*",
-    "body-parser": "*"
+    "server-sent-events": "0.0.4"
+  },
+  "devDependencies": {
+    "generator-polymer": "^1.2.3"
   }
 }
