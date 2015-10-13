@@ -1,0 +1,19 @@
+{
+  "server": {
+    "port": 2000,
+    "hostname": "0.0.0.0",
+    "components": {
+      "webapp": true,
+      "restapi": true,
+      "sockets": true
+    }
+  },
+  "hardware": {
+    "serial": "/dev/tty.usbmodem1431",
+    "pins": {
+      "red": 10,
+      "green": 11,
+      "blue": 9
+    }
+  }
+}

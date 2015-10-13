@@ -1,24 +1,22 @@
+<!doctype html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>RGB LED</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <link rel="stylesheet" href="http://bgrins.github.com/spectrum/spectrum.css">
-  <link rel="stylesheet" href="style/app.css">
-</head>
-<body>
-  <div class="control">
-    <div>
-      <input type="text" name="color" value="" class="colorpicker">
+  <head>
+    <meta name="viewport" content="width=device-width">
+    <title>RGB</title>
+    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="spectrum/spectrum.css">
+  </head>
+  <body>
+    <div class="content">
+      <div class="preview">
+      </div>
+      <input type="text" id="colorpicker">
+      <div class="switch">
+        <div class="handle">ON</div>
+      </div>
     </div>
-    <div class="switch">
-      <button class="on">ON</button>
-      <button class="off">OFF</button>
-    </div>
-  </div>
-  <script src="http://code.jquery.com/jquery-2.1.4.min.js" charset="utf-8"></script>
-  <script src="http://bgrins.github.com/spectrum/spectrum.js" charset="utf-8"></script>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="script/app.js" charset="utf-8"></script>
-</body>
+    <script src="spectrum/jquery.min.js"></script>
+    <script src="spectrum/spectrum.js"></script>
+    <script src="app.js"></script>
+  </body>
 </html>
