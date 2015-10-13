@@ -12,6 +12,8 @@ let board = new Board(config.hardware.serial, config.hardware.pins);
 
 var app = express();
 
+app.use(express.static(__dirname + '/public'))
+
 app.use(bodyParser.json());
 
 app.get('/status', (req, res) => {

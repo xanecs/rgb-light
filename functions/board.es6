@@ -46,7 +46,7 @@ class Board extends EventEmitter {
 
     let hexColor = "#";
     for (let sub of ['red', 'green', 'blue']) {
-      let str = color[sub].toString(16);
+      let str = Math.floor(color[sub]).toString(16);
       if (str.length === 1) {
         str = "0" + str;
       }
@@ -56,6 +56,8 @@ class Board extends EventEmitter {
     this.led.color(hexColor);
     if (color.red + color.green + color.blue !== 0) {
       this.ledpower = true;
+    } else {
+      this.ledpower = false;
     }
     if (this.ledcolor !== color) {
       this.ledcolor = color;
