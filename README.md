@@ -21,7 +21,7 @@ The default pinout is:
 Connect the Arduino to your PC or Raspberry Pi. Then start the server
 
 ```
-node server.js
+node server.es6
 ```
 
 Now open a webbrowser at `http://localhost:2000`
