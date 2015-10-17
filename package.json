@@ -12,6 +12,7 @@
     "body-parser": "*",
     "express": "*",
     "johnny-five": "*",
+    "mqtt": "^1.4.3",
     "server-sent-events": "0.0.4"
   },
   "devDependencies": {
