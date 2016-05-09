@@ -2,6 +2,7 @@
 
 let five = require('johnny-five');
 let EventEmitter = require('events');
+let SerialPort = require('serialport').SerialPort;
 
 class Board extends EventEmitter {
   constructor(serial, pins) {
@@ -10,7 +11,10 @@ class Board extends EventEmitter {
     this.ledcolor = {red: 0, green: 0, blue: 0};
 
     this.board = new five.Board({
-      port: serial,
+      port: new SerialPort(serial, {
+        baudrate: 115200,
+        buffersize: 1
+      }),
       repl: false
     });
     this.board.on('ready', () => {
